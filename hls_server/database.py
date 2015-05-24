@@ -67,26 +67,30 @@ class HlsDatabase:
             user_score=0.0
             weightnorm=0.0
             for field_key, field_value in fields.items():
-                if field_value!=None & field_value!=None:
-                    weightnorm=weightnorm+field.weight
-                    field=self.get_field(field_key)
-                    
-                    field_user_value = user.get_value(field_key)
-                    
-                    fieldscore=0.0
-                    if field.ftype == 'number':
-                        fieldscore=100.0-abs(field_user_value-field_value)
-                    
-                    if field.ftype == 'qcm':
-                        if field_user_value==field_value:
-                            fieldscore=100.0
-                        else:
-                            fieldscore=0.0
-                    
-                    if field.ftype == 'char':
-                        distance=damerau_levenshtein_distance(field_user_value, field_value)
-                        string_len=max(len(field_user_value),len(field_value))
-                        fieldscore=100.0*distance/string_len
+                
+				weightnorm=weightnorm+field.weight
+				field=self.get_field(field_key)
+				
+				field_user_value = user.get_value(field_key)
+				if not field_value or not field_user_value:
+					continue
+				fieldscore=0.0
+				if field.ftype == 'number':
+					if abs(field_user_value-field_value)<12.5:
+						fieldscore=field.weight*(100.0-8*abs(field_user_value-field_value))
+					else:
+						fieldscore=0.0
+				
+				if field.ftype == 'qcm':
+					if field_user_value==field_value:
+						fieldscore=field.weight*100.0
+					else:
+						fieldscore=0.0
+				
+				if field.ftype == 'char':
+					distance=damerau_levenshtein_distance(field_user_value, field_value)
+					string_len=max(len(field_user_value),len(field_value))
+					fieldscore=100.0*field.weight*distance/string_len
                     
             user_score=user_score+fieldscore
             result.append({
