@@ -81,16 +81,16 @@ class HlsDatabase:
     def get_fields_names(self):
         for field_name, field in User.get_fields():
             yield field_name
-    
+
     def meanvalue(self,values):
         return float(sum(values))/len(values)
-    
+
     def dispersion(self,values):
         sqsumarray=[item**2 for item in values]
         sqsum=sum(sqsumarray)
         sqsum=sqsum/len(values)
         return m.sqrt(sqsum)
-        
+
     def search_users(self, fields):
         result = []
         for user_id, user in self._users.items():
@@ -132,7 +132,7 @@ class HlsDatabase:
             result.append({
                 'user': user,
                 'score': user_score,
-                'quality': 1.0
+                'quality': 0.0
                 })
 
         for item in result:
@@ -140,10 +140,10 @@ class HlsDatabase:
                 item['score']=item['score']/weightnorm
             else:
                 item['score']=0.0
-        
+
         result.sort(key=lambda x: x['score'],reverse=True)
-        
-        
+
+
         bestscore=result[0]['score']
 
         for item in result:
@@ -151,9 +151,9 @@ class HlsDatabase:
                 item['score']=item['score']
             else:
                 item['score']=0.0
-        
+
         slope=(result[0]['score']-result[4]['score'])/5.0
-        
+
         for item0 in result:
             score0=item0['score']
             countN=0
@@ -161,9 +161,14 @@ class HlsDatabase:
                 score1=item1['score']
                 if score1>score0-3*slope and score1<score0+3*slope:
                     countN=countN+1
-            item0['quality']=1.0/countN
-        
-        
+            if countN:
+                item0['quality']=1.0/countN
+
+        filtering = False
+        if filtering:
+            result = result[:5]
+            result = filter(lambda x: x['quality']>=0.14, result)
+
         return result
 
     def get_missing_fields(self, fields, users):

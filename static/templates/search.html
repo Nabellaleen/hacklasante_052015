@@ -32,7 +32,7 @@
 					<input type="number" class="form-control" ng-model="search.birthyear" id="birthyear" placeholder="">
 				</div>
 			</div>
-			
+
 			<div class="form-group">
 				<label for="sexe" class="col-sm-2 control-label">Sexe</label>
 				<div class="col-sm-10">
@@ -60,7 +60,7 @@
 					<input type="text" class="form-control" ng-model="search.secu" id="secu" placeholder="">
 				</div>
 			</div>
-			
+
 		</form>
 
 
@@ -77,6 +77,7 @@
 						<th>Prénom</th>
 						<th>Nom</th>
 						<th>Date de naissance</th>
+						<th>Nationalité</th>
 						<th>Dernière visite</th>
 						<th></th>
 					</tr>
@@ -90,6 +91,7 @@
 					<td>{{result.user.firstname}}</td>
 					<td>{{result.user.lastname}}</td>
 					<td>{{result.user.birthyear}}</td>
+					<td>{{result.user.nationality}}</td>
 					<td></td>
 					<td><a ui-sref="user.preview({userId:result.user.user_id})">Voir la fiche</a></td>
 				</tr>
