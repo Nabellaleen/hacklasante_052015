@@ -9,6 +9,7 @@
 <table class="table table-bordered table-stripped">
 	<thead>
 		<tr>
+			<th>Distance</th>
 			<th>Pseudo</th>
 			<th>Prénom</th>
 			<th>Nom</th>
@@ -21,6 +22,7 @@
 		<td colspan="6">Aucun résultat trouvé</td>
 	</tr>
 	<tr ng-repeat="result in results">
+		<th>{{result.score|number:0}}</th>
 		<td>{{result.user.name}}</td>
 		<td>{{result.user.firstname}}</td>
 		<td>{{result.user.lastname}}</td>

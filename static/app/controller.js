@@ -10,7 +10,8 @@ angular
 				$scope.results = undefined;
 			else
 				$http.post('/;get_users', {fields: $scope.search}).then(function(result) {
-					result.data.users.sort(function(a, b) { return 100 * (a.score - b.score); });
+					result.data.users.sort(function(b, a) { return 100 * (a.score - b.score); });
+					result.data.users.splice(10, 10000)
 					$scope.results = result.data.users;
 				});
 

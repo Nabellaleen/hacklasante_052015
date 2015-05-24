@@ -54,12 +54,12 @@
 			<td colspan="6">Aucun résultat trouvé</td>
 		</tr>
 		<tr ng-repeat="result in results">
-			<th>{{result.score}}</th>
+			<th>{{result.score|number:0}}</th>
 			<td>{{result.user.name}}</td>
 			<td>{{result.user.firstname}}</td>
 			<td>{{result.user.lastname}}</td>
 			<td>{{result.user.birthyear}}</td>
-			<td>{{result|json}}</td>
+			<td></td>
 			<td><a ui-sref="user.preview({userId:result.user.user_id})">Voir la fiche</a></td>
 		</tr>
 	</table>
