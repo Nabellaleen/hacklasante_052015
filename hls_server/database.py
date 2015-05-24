@@ -67,13 +67,14 @@ class HlsDatabase:
             user_score=0.0
             weightnorm=0.0
             for field_key, field_value in fields.items():
-                
-				weightnorm=weightnorm+field.weight
-				field=self.get_field(field_key)
 				
+				field=self.get_field(field_key)				
 				field_user_value = user.get_value(field_key)
+				
 				if not field_value or not field_user_value:
 					continue
+				
+				weightnorm=weightnorm+field.weight
 				fieldscore=0.0
 				if field.ftype == 'number':
 					if abs(field_user_value-field_value)<12.5:
@@ -90,9 +91,9 @@ class HlsDatabase:
 				if field.ftype == 'char':
 					distance=damerau_levenshtein_distance(field_user_value, field_value)
 					string_len=max(len(field_user_value),len(field_value))
-					fieldscore=100.0*field.weight*distance/string_len
-                    
-            user_score=user_score+fieldscore
+					fieldscore=100.0*field.weight*distance/string_len    
+				user_score=user_score+fieldscore
+				
             result.append({
                 'user': user,
                 'score': user_score
