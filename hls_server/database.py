@@ -158,7 +158,7 @@ class HlsDatabase:
             score0=item0['score']
             countN=0
             for item1 in result:
-                score1=item0['score']
+                score1=item1['score']
                 if score1>score0-3*slope and score1<score0+3*slope:
                     countN=countN+1
             item0['quality']=1.0/countN
