@@ -2,20 +2,18 @@ angular
 	.module('hack.controllers', [])
 
 	.controller('SearchController', function($scope, $http) {
-		$scope.search = {};
-
-		var first = true
+		$scope.search = {name: '', firstname: '', lastname: '', birthyear: ''};
+		$scope.search_ref = angular.copy($scope.search);
 
 		$scope.$watch('search', function(search) {
-			if (first) {
-				first = false
-				return;
-			}
+			if (angular.equals($scope.search, $scope.search_ref))
+				$scope.results = undefined;
+			else
+				$http.post('/;get_users', {fields: $scope.search}).then(function(result) {
+					result.data.users.sort(function(a, b) { return 100 * (a.score - b.score); });
+					$scope.results = result.data.users;
+				});
 
-			$http.post('/;get_users', {fields: $scope.search}).then(function(result) {
-				result.data.users.sort(function(a, b) { return 100 * (a.score - b.score); });
-				$scope.results = result.data.users;
-			});
 		}, true);
 	})
 	
