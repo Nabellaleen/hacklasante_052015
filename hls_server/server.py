@@ -17,7 +17,7 @@ def rest_user(user_id=None):
         try:
             user = database.get_user(user_id)
         except KeyError:
-            abort(403)
+            abort(404)
         return jsonify(user.get_namespace())
 
     elif request_method == 'PUT':
@@ -25,7 +25,7 @@ def rest_user(user_id=None):
         try:
             user = database.get_user(user_id)
         except KeyError:
-            abort(403)
+            abort(404)
         for key, value in json_data['fields'].items():
             user.set_value(key, value)
         return jsonify(user.get_namespace())
@@ -42,7 +42,7 @@ def rest_user(user_id=None):
     elif request_method == 'DELETE':
         deleted_user = database.pop_user(user_id)
         return jsonify(deleted_user.get_namespace())
-    abort(401)
+    abort(405)
 
 def get_users():
     json_data = request.get_json(force=True)
