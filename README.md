@@ -20,13 +20,17 @@ Au coeur de celle-ci se trouvent :
 - Télécharger le dépôt et l'extraire
 - (optionnel - conseillé) Créer un environnement virtuel python (virtualenv, pyvenv, virtualenvwrapper, conda ...)
 - Installer les dépendances
+```Shell
     pip install -r requirements.txt
-
+```
 ## Exécution
 
 - Lancer le serveur
+```Shell
     python main.py
+```
 - Accéder à l'interface avec un navigateur à l'url :
+```
     http://127.0.0.1:5000/
-
+```
     
