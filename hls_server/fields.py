@@ -4,6 +4,7 @@ class Field:
     basic_field = False
     value = None
     weight = None
+    ftype = None
 
     def __init__(self, **kwargs):
     # Automatically add init parameters as instance fields
@@ -21,6 +22,9 @@ class Field:
 
     def get_weight(self):
         return self.weight
+
+    def get_ftype(self):
+        return self.ftype
 
 
 class BasicField(Field):

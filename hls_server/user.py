@@ -2,11 +2,15 @@ from hls_server.fields import Field, BasicField
 
 class User:
 
-    name = BasicField(title='Pseudonyme', weight=0.4)
-    sexe = BasicField(title='Sexe', weight=0.7)
-    firstname = BasicField(title='Prénom', weight=0.6)
-    lastname = BasicField(title='Nom de famille', weight=0.3)
-    birthyear = BasicField(title='Année de naissance', weight=0.9)
+    name = BasicField(title='Pseudonyme', weight=0.4, ftype='char')
+    sexe = BasicField(title='Sexe', weight=0.7, ftype='qcm')
+    firstname = BasicField(title='Prénom', weight=0.6, ftype='char')
+    lastname = BasicField(title='Nom de famille', weight=0.3, ftype='char')
+    birthyear = BasicField(title='Année de naissance', weight=0.9, ftype='number')
+    nationality = BasicField(title='Nationalité', weight=0.2, ftype='qcm')
+    legalstatus = BasicField(title='Statut légal', weight=0.2, ftype='qcm')
+    secu = BasicField(title='Couverture médicale', weight=0.3, ftype='qcm')
+    
     blood_group = Field(title='Groupe sanguin', weight=0.7)
 
     def __init__(self, **kwargs):
