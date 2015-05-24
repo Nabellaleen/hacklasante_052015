@@ -45,6 +45,7 @@ class HlsDatabase:
         user_id = str(len(self._users.keys()))
         user.set_value('user_id', user_id)
         self._users[user_id] = user
+        print self._users
 
     def get_user(self, user_id):
         return self._users[user_id]

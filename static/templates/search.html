@@ -1,0 +1,64 @@
+
+<form class="form-horizontal">
+	
+	<h2>Remplissez les données dont vous disposez</h2>
+
+	<div class="form-group">
+		<label for="name" class="col-sm-2 control-label">Pseudo</label>
+		<div class="col-sm-10">
+			<input type="text" class="form-control" ng-model="search.name" id="name" placeholder="">
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label for="firstname" class="col-sm-2 control-label">Prénom</label>
+		<div class="col-sm-10">
+			<input type="text" class="form-control" ng-model="search.firstname" id="firstname" placeholder="">
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label for="lastname" class="col-sm-2 control-label">Nom</label>
+		<div class="col-sm-10">
+			<input type="text" class="form-control" ng-model="search.lastname" id="lastname" placeholder="">
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label for="birthyear" class="col-sm-2 control-label">Année de naissance</label>
+		<div class="col-sm-10">
+			<input type="number" class="form-control" ng-model="search.birthyear" id="birthyear" placeholder="">
+		</div>
+	</div>
+</form>
+
+
+<div ng-if="results">
+
+	<hr/>
+
+	<table class="table table-bordered table-stripped">
+		<thead>
+			<tr>
+				<th>Pseudo</th>
+				<th>Prénom</th>
+				<th>Nom</th>
+				<th>Date de naissance</th>
+				<th>Dernière visite</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tr ng-if="results.length == 0">
+			<td colspan="6">Aucun résultat trouvé</td>
+		</tr>
+		<tr ng-repeat="result in results">
+			<td>{{result.user.name}}</td>
+			<td>{{result.user.firstname}}</td>
+			<td>{{result.user.lastname}}</td>
+			<td>{{result.user.birthyear}}</td>
+			<td></td>
+			<td><a ui-sref="user.preview({userId:user.user_id})">Voir la fiche</a></td>
+		</tr>
+	</table>
+
+</div>

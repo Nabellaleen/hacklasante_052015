@@ -1,3 +1,6 @@
+ # -*- coding: utf-8 -*-
+
+
 from hls_server.fields import Field, BasicField
 
 class User:
@@ -12,7 +15,7 @@ class User:
     secu = BasicField(title='Couverture médicale', weight=0.3, ftype='qcm')
     
     blood_group = Field(title='Groupe sanguin', weight=0.7)
-    user_id = Field(title='ID Utilisateur', weight=0)
+    user_id = BasicField(title='ID Utilisateur', weight=0)
 
     def __init__(self, **kwargs):
         # Automatically add init parameters as instance fields
@@ -45,3 +48,6 @@ class User:
         if not field:
             return
         field.set_value(value)
+
+    def __repr__(self):
+        return "<User({0}, {1})>".format(self.user_id.get_value(), self.name.get_value())
