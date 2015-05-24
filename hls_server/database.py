@@ -45,6 +45,9 @@ class HlsDatabase:
         user.set_value('user_id', user_id)
         self._users[user_id] = user
 
+    def pop_user(self, user_id):
+        return self._users.pop(user_id)
+
     def get_user(self, user_id):
         return self._users[user_id]
 

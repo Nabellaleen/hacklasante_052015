@@ -1,5 +1,5 @@
 from flask import render_template
-from flask import request, jsonify
+from flask import request, jsonify, abort
 
 import flask.views
 
@@ -9,10 +9,25 @@ class HlsServerView(flask.views.MethodView):
     def get(self):
         return render_template('main.html')
 
-def get_user(user_id):
+def rest_user(user_id):
     database = get_database()
-    user = database.get_user(user_id)
-    return jsonify(user.get_namespace())
+    try:
+        user = database.get_user(user_id)
+    except KeyError:
+        abort(403)
+    if not user:
+        abort(402)
+    request_method = request.method
+    if request_method == 'GET':
+        return jsonify(user.get_namespace())
+    elif request_method == 'POST':
+        pass
+    elif request_method == 'PUT':
+        pass
+    elif request_method == 'DELETE':
+        deleted_user = database.pop_user(user_id)
+        return jsonify(deleted_user.get_namespace())
+    abort(401)
 
 def get_users():
     json_data = request.get_json(force=True)
