@@ -18,6 +18,8 @@ def get_database():
 
 class HlsDatabase:
 
+    restore_db_path = 'data/origin_db.csv'
+
     _users = {}
     filepath = None
     fetched = False
@@ -27,8 +29,14 @@ class HlsDatabase:
         self.fetch()
         self.fetched = True
 
-    def fetch(self):
-        with open(self.filepath, 'r') as csvfile:
+    def restore(self):
+        self.fetch(filepath=restore_db_path)
+        self.commit()
+
+    def fetch(self, filepath=None):
+        if not filepath:
+            filepath = self.filepath
+        with open(filepath, 'r') as csvfile:
              database = csv_reader(csvfile, delimiter=',')
              for row in database:
                 new_user = User()

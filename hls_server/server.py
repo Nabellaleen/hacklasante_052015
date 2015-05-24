@@ -10,6 +10,10 @@ class HlsServerView(flask.views.MethodView):
     def get(self):
         return render_template('main.html')
 
+def restore_database():
+    database = get_database()
+    database.restore()
+
 def rest_user(user_id=None):
     database = get_database()
     request_method = request.method

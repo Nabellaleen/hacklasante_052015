@@ -9,6 +9,10 @@ app.add_url_rule('/',
     view_func=HlsServerView.as_view('hls_server_view'),
     methods=['GET'])
 
+app.add_url_rule('/database/;restore',
+    view_func=restore_database,
+    methods['POST'])
+
 app.add_url_rule('/;get_users',
     view_func=get_users,
     methods=['POST'])
