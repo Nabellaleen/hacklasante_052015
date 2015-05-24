@@ -1,6 +1,7 @@
 from csv import DictReader as csv_reader
+from csv import DictWriter as csv_writer
 
-from hls_server.user import User
+from hls_server.user import User, get_fields
 from pyxdameraulevenshtein import damerau_levenshtein_distance, normalized_damerau_levenshtein_distance, damerau_levenshtein_distance_withNPArray, normalized_damerau_levenshtein_distance_withNPArray
 
 _database = None
@@ -18,9 +19,16 @@ def get_database():
 class HlsDatabase:
 
     _users = {}
+    filepath = None
+    fetched = False
 
     def __init__(self, filepath):
-        with open(filepath) as csvfile:
+        self.filepath = filepath
+        self.fetch()
+        self.fetched = True
+
+    def fetch(self):
+        with open(self.filepath, 'r') as csvfile:
              database = csv_reader(csvfile, delimiter=',')
              for row in database:
                 new_user = User()
@@ -28,14 +36,29 @@ class HlsDatabase:
                     new_user.set_value(key, value)
                 self.add_user(new_user)
 
+    def commit(self):
+        if not self.fetched:
+            return
+        with open(self.filepath, 'w') as csvfile:
+            fieldnames = [key for key, value in get_fields()]
+            writer = csv_writer(csvfile, fieldnames=fieldnames)
+
+            writer.writeheader()
+            for user in self._users.values():
+                writer.writerow(user.get_namespace())
+
     def add_user(self, user):
         user_id = str(len(self._users.keys()))
         user.set_value('user_id', user_id)
         self._users[user_id] = user
+
+        self.commit()
         return user
 
     def pop_user(self, user_id):
-        return self._users.pop(user_id)
+        user = self._users.pop(user_id)
+        self.commit()
+        return user
 
     def get_user(self, user_id):
         return self._users[user_id]

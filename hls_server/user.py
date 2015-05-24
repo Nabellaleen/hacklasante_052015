@@ -1,6 +1,5 @@
  # -*- coding: utf-8 -*-
 
-
 from hls_server.fields import Field, BasicField
 
 user_fields = {
@@ -56,12 +55,16 @@ class User:
         if not field:
             return
         setattr(self, name, value)
+        from hls_server.database import get_database
+        database = get_database()
+        if database:
+            database.commit()
 
     def get_value(self,name):
         field = get_field(name)
         if not field:
             return None
-        return getattr(self, name)
+        return getattr(self, name, None)
 
 
     def __repr__(self):
