@@ -1,6 +1,6 @@
 from flask import Flask
 
-from hls_server.server import HlsServerView, get_users
+from hls_server.server import HlsServerView, get_users, get_user
 from hls_server.database import init_database, get_database
 
 app = Flask(__name__)
@@ -12,6 +12,10 @@ app.add_url_rule('/',
 app.add_url_rule('/;get_users',
     view_func=get_users,
     methods=['POST'])
+
+app.add_url_rule('/users/<user_id>',
+    view_func=get_user,
+    methods=['GET'])
 
 if __name__ == "__main__":
     init_database('data/database.csv')

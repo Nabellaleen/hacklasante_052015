@@ -9,6 +9,11 @@ class HlsServerView(flask.views.MethodView):
     def get(self):
         return render_template('main.html')
 
+def get_user(user_id):
+    database = get_database()
+    user = database.get_user(user_id)
+    return jsonify(user.get_namespace())
+
 def get_users():
     json_data = request.get_json(force=True)
     database = get_database()

@@ -12,14 +12,12 @@ class User:
     secu = BasicField(title='Couverture médicale', weight=0.3, ftype='qcm')
     
     blood_group = Field(title='Groupe sanguin', weight=0.7)
+    user_id = Field(title='ID Utilisateur', weight=0)
 
     def __init__(self, **kwargs):
         # Automatically add init parameters as instance fields
         for k, v in kwargs.items():
-            field = getattr(self, k, None)
-            if not field:
-                continue
-            field.set_value(v)
+            self.set_value(k, v)
 
     def get_basic_namespace(self):
         # TODO : Improve being less dynamic / more explicit
@@ -29,9 +27,21 @@ class User:
                 result[field_name] = field.get_value()
         return result
 
+    def get_namespace(self):
+        result = {}
+        for field_name, field in User.get_fields():
+            result[field_name] = field.get_value()
+        return result
+
     @classmethod
     def get_fields(cls):
         for elt_name in dir(cls):
             elt = getattr(cls, elt_name)
             if isinstance(elt, Field):
                 yield elt_name, elt
+
+    def set_value(self, name, value):
+        field = getattr(self, name, None)
+        if not field:
+            return
+        field.set_value(value)

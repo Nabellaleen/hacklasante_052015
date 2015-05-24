@@ -1,3 +1,5 @@
+from random import random
+
 from hls_server.user import User
 
 _database = None
@@ -14,20 +16,9 @@ def get_database():
 
 class HlsDatabase:
 
+    _users = {}
+
     def __init__(self, filepath):
-        pass
-
-    def get_field(self, name):
-        for field_name, field in User.get_fields():
-            if field_name == name:
-                return field
-        return None
-
-    def get_fields_names(self):
-        for field_name, field in User.get_fields():
-            yield field_name
-
-    def search_users(self, fields):
         user1 = User(
             name='Toto',
             firstname='Flo',
@@ -46,13 +37,37 @@ class HlsDatabase:
             lastname=None,
             birthyear=1974,
             sexe='F')
+        self.add_user(user1)
+        self.add_user(user2)
+        self.add_user(user3)
+
+    def add_user(self, user):
+        user_id = str(len(self._users.keys()))
+        user.set_value('user_id', user_id)
+        self._users[user_id] = user
+
+    def get_user(self, user_id):
+        return self._users[user_id]
+
+    def get_field(self, name):
+        for field_name, field in User.get_fields():
+            if field_name == name:
+                return field
+        return None
+
+    def get_fields_names(self):
+        for field_name, field in User.get_fields():
+            yield field_name
+
+    def search_users(self, fields):
+        result = []
+        for user_id, user in self._users.items():
+            result.append({
+                'user': user,
+                'score': random()
+                })
         # TODO
-        return [{'user': user1,
-                 'score': 0.7},
-                {'user': user2,
-                 'score': 0.4},
-                {'user': user3,
-                 'score': 0.2}]
+        return result
 
     def get_missing_fields(self, fields, users):
         request_fields = set(fields)
