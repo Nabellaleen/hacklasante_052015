@@ -124,6 +124,7 @@ class HlsDatabase:
                 'score': user_score,
                 'quality': 1.0
                 })
+
         for item in result:
             if abs(weightnorm)>0.01:
                 item['score']=item['score']/weightnorm

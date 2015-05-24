@@ -1,7 +1,7 @@
 angular
 	.module('hack.controllers', [])
 
-	.controller('SearchController', function($scope, $http) {
+	.controller('SearchController', function($scope, $state, $http) {
 		$scope.search = {name: '', firstname: '', lastname: '', birthyear: ''};
 		$scope.search_ref = angular.copy($scope.search);
 
@@ -14,8 +14,24 @@ angular
 					result.data.users.splice(10, 10000)
 					$scope.results = result.data.users;
 				});
-
 		}, true);
+
+		$('#reader').html5_qrcode(
+			function(data){
+				console.log(data)
+				$state.go('user.preview', {userId: data});
+				// do something when code is read
+			},
+			function(error){
+				//show read errors 
+			}, function(videoError){
+				//the video stream could be opened
+			}
+		);
+
+		$scope.$on('$destroy', function() {
+			$('#reader').html5_qrcode_stop();
+		})
 	})
 
 	.controller('UserController', function($scope, $http, $state, $stateParams, user) {

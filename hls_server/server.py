@@ -56,6 +56,7 @@ def get_users():
     for user in users:
         user_json = user['user'].get_basic_namespace()
         users_ns.append({'user': user_json,
+                        'quality': user['quality'],
                          'score': user['score']})
 
     missing_fields = database.get_missing_fields(
