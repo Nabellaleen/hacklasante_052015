@@ -13,7 +13,7 @@ angular
 			}
 
 			$http.post('/;get_users', {fields: $scope.search}).then(function(result) {
-				result.data.users.sort(function(a, b) { return 100 * (b.score - a.score); });
+				result.data.users.sort(function(a, b) { return 100 * (a.score - b.score); });
 				$scope.results = result.data.users;
 			});
 		}, true);
@@ -23,7 +23,12 @@ angular
 		$scope.user = user;
 		
 		$scope.save = function() {
-			return $http.put('/users/' + user.user_id, $scope.user)
+			if ($stateParams.userId == 'new')
+				return $http.post('/users', $scope.user).then(function(user) {
+					console.log(user)
+				});
+			else
+				return $http.put('/users/' + user.user_id, $scope.user)
 		};
 	})
 	

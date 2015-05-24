@@ -19,9 +19,22 @@ angular
 				templateUrl: '/static/templates/user-menu.html',
 				resolve: {
 					user: function($http, $stateParams) {
-						return $http.get('/users/' + $stateParams.userId).then(function(user) {
-							return user.data;
-						})
+						if ($stateParams.userId == 'new')
+							return {
+								"birthyear": null, 
+								"blood_group": null, 
+								"firstname": "", 
+								"lastname": "", 
+								"legalstatus": null, 
+								"name": null, 
+								"nationality": null, 
+								"secu": null, 
+								"sexe": null
+							};
+						else
+							return $http.get('/users/' + $stateParams.userId).then(function(user) {
+								return user.data;
+							})
 					}
 				}
 			})
@@ -51,7 +64,7 @@ angular
 				resolve: {
 					users: function($http, user) {
 						return $http.post('/;get_users', {fields: user}).then(function(result) {
-							result.data.users.sort(function(a, b) { return 100 * (b.score - a.score); });
+							result.data.users.sort(function(a, b) { return 100 * (a.score - b.score); });
 							return result.data.users;
 						});
 					}
