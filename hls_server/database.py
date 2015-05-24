@@ -101,7 +101,7 @@ class HlsDatabase:
                 if field.ftype == 'number':
                     if abs(int(field_user_value)-int(field_value))<10:
                         fieldscore=(100.0-8*abs(int(field_user_value)-int(field_value)))
-                        print fieldscore,field_user_value,field_value
+                        print(fieldscore,field_user_value,field_value)
                     else:
                         fieldscore=0.0
                     user_score=user_score+fieldscore
