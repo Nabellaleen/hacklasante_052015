@@ -57,7 +57,7 @@
 			<td>{{result.user.firstname}}</td>
 			<td>{{result.user.lastname}}</td>
 			<td>{{result.user.birthyear}}</td>
-			<td></td>
+			<td>{{result|json}}</td>
 			<td><a ui-sref="user.preview({userId:result.user.user_id})">Voir la fiche</a></td>
 		</tr>
 	</table>
