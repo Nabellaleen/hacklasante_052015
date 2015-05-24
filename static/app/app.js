@@ -38,7 +38,7 @@ angular
 				templateUrl: '/static/templates/user-patient.html',
 			})
 
-			.state('user.meeting', {
+			.state('user.meetings', {
 				url: "/meeting",
 				controller: "UserMeetingController",
 				templateUrl: '/static/templates/user-meeting.html',
@@ -48,13 +48,28 @@ angular
 				url: "/merge",
 				controller: "UserMergeController",
 				templateUrl: '/static/templates/user-merge.html',
+				resolve: {
+					users: function($http, user) {
+						return $http.post('/;get_users', {fields: user}).then(function(result) {
+							result.data.users.sort(function(a, b) { return 100 * (a.score - b.score); });
+							return result.data.users;
+						});
+					}
+				}
 			})
-			
-			.state('user.remove', {
-				url: "/remove",
-				controller: "UserRemoveController",
-				templateUrl: '/static/templates/user-remove.html',
-			});
+
+			.state('user.consolidate', {
+				url: "/consolidate/:otherId",
+				controller: "UserConsolidateController",
+				templateUrl: '/static/templates/user-consolidate.html',
+				resolve: {
+					other: function($http, $stateParams) {
+						return $http.get('/users/' + $stateParams.otherId).then(function(user) {
+							return user.data;
+						})
+					}
+				}
+			})			
 	})
 
 	.run(function($rootScope, $state) {

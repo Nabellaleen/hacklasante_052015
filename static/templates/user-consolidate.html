@@ -1,0 +1,60 @@
+
+<ol class="breadcrumb">
+	<li class="active">Patient</li>
+	<li class="active">{{user.firstname}} {{user.lastname}}</li>
+	<li class="active">Consolider</li>
+</ol>
+
+<table>
+	<thead>
+		<tr>
+			<th></th>
+			<th>Utilisateur courant</th>
+			<th>Doublon</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>name</td>
+			<td>{{user.name}}</td>
+			<td>{{other.name}}</td>
+		</tr>
+		<tr>
+			<td>firstname</td>
+			<td>{{user.firstname}}</td>
+			<td>{{other.firstname}}</td>
+		</tr>
+		<tr>
+			<td>lastname</td>
+			<td>{{user.lastname}}</td>
+			<td>{{other.lastname}}</td>
+		</tr>
+		<tr>
+			<td>birthyear</td>
+			<td>{{user.birthyear}}</td>
+			<td>{{other.birthyear}}</td>
+		</tr>
+		<tr>
+			<td>nationality</td>
+			<td>{{user.nationality}}</td>
+			<td>{{other.nationality}}</td>
+		</tr>
+		<tr>
+			<td>sexe</td>
+			<td>{{user.sexe}}</td>
+			<td>{{other.sexe}}</td>
+		</tr>
+		<tr>
+			<td>legalstatus</td>
+			<td>{{user.legalstatus}}</td>
+			<td>{{other.legalstatus}}</td>
+		</tr>
+		<tr>
+			<td>secu</td>
+			<td>{{user.secu}}</td>
+			<td>{{other.secu}}</td>
+		</tr>
+	</tbody>
+</table>
+
+<button class="btn btn-primary">Valider la fusion</button>

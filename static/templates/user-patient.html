@@ -1,69 +1,73 @@
 
+<ol class="breadcrumb">
+	<li class="active">Patient</li>
+	<li class="active">{{user.firstname}} {{user.lastname}}</li>
+	<li class="active">Patient</li>
+</ol>
+
 <form class="form-horizontal">
 	
 	<h2>Identité</h2>
 
-
-	{{user|json}}
 	<div class="form-group">
-		<label for="nickname" class="col-sm-2 control-label">Pseudo</label>
+		<label for="name" class="col-sm-2 control-label">Pseudo</label>
 		<div class="col-sm-10">
-			<input type="text" class="form-control" ng-model="patient.nickname" id="nickname" placeholder="">
+			<input type="text" class="form-control" ng-model="user.name" id="name" placeholder="">
 		</div>
 	</div>
 
 	<div class="form-group">
 		<label for="firstname" class="col-sm-2 control-label">Prénom</label>
 		<div class="col-sm-10">
-			<input type="text" class="form-control" ng-model="patient.firstname" id="firstname" placeholder="">
+			<input type="text" class="form-control" ng-model="user.firstname" id="firstname" placeholder="">
 		</div>
 	</div>
 
 	<div class="form-group">
-		<label for="name" class="col-sm-2 control-label">Nom</label>
+		<label for="lastname" class="col-sm-2 control-label">Nom</label>
 		<div class="col-sm-10">
-			<input type="text" class="form-control" ng-model="patient.name" id="name" placeholder="">
+			<input type="text" class="form-control" ng-model="user.lastname" id="lastname" placeholder="">
 		</div>
 	</div>
 
 	<div class="form-group">
-		<label for="birthdate" class="col-sm-2 control-label">Date de naissance</label>
+		<label for="birthyear" class="col-sm-2 control-label">Date de naissance</label>
 		<div class="col-sm-10">
-			<input type="text" class="form-control" ng-model="patient.birthdate" id="birthdate" placeholder="">
+			<input type="number" class="form-control" ng-model="user.birthyear" id="birthyear" placeholder="">
 		</div>
 	</div>
 
 	<div class="form-group">
-		<label for="phone" class="col-sm-2 control-label">Téléphone</label>
+		<label for="nationality" class="col-sm-2 control-label">Nationalité</label>
 		<div class="col-sm-10">
-			<input type="text" class="form-control" ng-model="patient.phone" id="phone" placeholder="">
+			<input type="text" class="form-control" ng-model="user.nationality" id="nationality" placeholder="">
 		</div>
 	</div>
 
 	<div class="form-group">
-		<label for="gender" class="col-sm-2 control-label">Sexe</label>
+		<label for="sexe" class="col-sm-2 control-label">Sexe</label>
 		<div class="col-sm-10">
-			<input type="radio" ng-model="patient.gender" value="male"> Masculin<br/>
-			<input type="radio" ng-model="patient.gender" value="female"> Feminin<br/>
+			<input type="radio" ng-model="user.sexe" value="M"> Masculin<br/>
+			<input type="radio" ng-model="user.sexe" value="F"> Feminin<br/>
 		</div>
 	</div>
 
 	<h2>Accès à la santé</h2>
 
 	<div class="form-group">
-		<label for="legal_status" class="col-sm-2 control-label">Status légal</label>
+		<label for="legalstatus" class="col-sm-2 control-label">Status légal</label>
 		<div class="col-sm-10">
-			<input type="radio" ng-model="patient.legal_status" value="no_need"> Pas besoin de titre<br/>
-			<input type="radio" ng-model="patient.legal_status" value="need"> Sans autorisation de séjour<br/>
+			<input type="radio" ng-model="user.legalstatus" value="no_need"> Pas besoin de titre<br/>
+			<input type="radio" ng-model="user.legalstatus" value="need"> Sans autorisation de séjour<br/>
 		</div>
 	</div>
 
 
 	<div class="form-group">
-		<label for="cmu" class="col-sm-2 control-label">CMU</label>
+		<label for="secu" class="col-sm-2 control-label">CMU</label>
 		<div class="col-sm-10">
-			<input type="radio" ng-model="patient.cmu" value="no_need"> Oui<br/>
-			<input type="radio" ng-model="patient.cmu" value="need"> Non<br/>
+			<input type="radio" ng-model="user.secu" value="yes"> Oui<br/>
+			<input type="radio" ng-model="user.secu" value="no"> Non<br/>
 		</div>
 	</div>
 

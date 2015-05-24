@@ -1,0 +1,31 @@
+
+<ol class="breadcrumb">
+	<li class="active">Patient</li>
+	<li class="active">{{user.firstname}} {{user.lastname}}</li>
+	<li class="active">Consolider</li>
+</ol>
+
+
+<table class="table table-bordered table-stripped">
+	<thead>
+		<tr>
+			<th>Pseudo</th>
+			<th>Prénom</th>
+			<th>Nom</th>
+			<th>Date de naissance</th>
+			<th>Dernière visite</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tr ng-if="results.length == 0">
+		<td colspan="6">Aucun résultat trouvé</td>
+	</tr>
+	<tr ng-repeat="result in results">
+		<td>{{result.user.name}}</td>
+		<td>{{result.user.firstname}}</td>
+		<td>{{result.user.lastname}}</td>
+		<td>{{result.user.birthyear}}</td>
+		<td></td>
+		<td><a ng-click="consolidate(result.user.user_id)">Consolider</a></td>
+	</tr>
+</table>
