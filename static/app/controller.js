@@ -17,11 +17,11 @@ angular
 
 		}, true);
 	})
-	
+
 	.controller('UserController', function($scope, $http, $state, $stateParams, user) {
 		$scope.user = user;
 		$scope.master = angular.copy($scope.user);
-		
+
 		$scope.isUnchanged = function() {
 			return angular.equals($scope.master, $scope.user);
 		};
@@ -37,30 +37,30 @@ angular
 				});
 		};
 	})
-	
+
 	.controller('UserPreviewController', function($scope) {
 	})
-	
+
 	.controller('UserPatientController', function($scope) {
 	})
-	
+
 	.controller('UserMeetingController', function($scope) {
 	})
-	
+
 	.controller('UserMergeController', function($scope, users) {
 		$scope.results = users.filter(function(result) {
 			return $scope.user.user_id !== result.user.user_id;
 		});
 	})
-	
+
 	.controller('UserConsolidateController', function($scope, $http, $state, other) {
 		$scope.other = other;
-		
+
 		$scope.consolidate = function() {
 			for (var key in $scope.user)
 				if (!$scope.user[key] && $scope.other[key])
 					$scope.user[key] = $scope.other[key];
-			
+
 			$http.delete('/users/' + $scope.other.user_id).then(function() {
 				$scope.save();
 

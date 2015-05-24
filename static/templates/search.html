@@ -1,6 +1,6 @@
 
 <form class="form-horizontal">
-	
+
 	<h2>Remplissez les données dont vous disposez</h2>
 
 	<div class="form-group">
@@ -54,7 +54,7 @@
 			<td colspan="6">Aucun résultat trouvé</td>
 		</tr>
 		<tr ng-repeat="result in results">
-			<th>{{result.score|number:0}}</th>
+			<th>{{result.score|number:0}} / {{result.quality|number:0}}</th>
 			<td>{{result.user.name}}</td>
 			<td>{{result.user.firstname}}</td>
 			<td>{{result.user.lastname}}</td>

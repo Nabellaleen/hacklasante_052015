@@ -121,7 +121,8 @@ class HlsDatabase:
 
             result.append({
                 'user': user,
-                'score': user_score
+                'score': user_score,
+                'quality': 1.0
                 })
         for item in result:
             if abs(weightnorm)>0.01:
