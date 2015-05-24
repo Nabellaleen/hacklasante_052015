@@ -17,16 +17,23 @@ angular
 		}, true);
 	})
 	
-	.controller('UserController', function($scope, $http, $stateParams, user) {
+	.controller('UserController', function($scope, $http, $state, $stateParams, user) {
 		$scope.user = user;
+		$scope.master = angular.copy($scope.user);
 		
+		$scope.isUnchanged = function() {
+			return angular.equals($scope.master, $scope.user);
+		};
+
 		$scope.save = function() {
 			if ($stateParams.userId == 'new')
-				return $http.post('/users', $scope.user).then(function(user) {
-					console.log(user)
+				return $http.post('/users', {fields:$scope.user}).then(function(result) {
+					$state.go('user.patient', {userId: result.data.user_id});
 				});
 			else
-				return $http.put('/users/' + user.user_id, $scope.user)
+				return $http.put('/users/' + user.user_id, {fields:$scope.user}).then(function() {
+					$scope.master = angular.copy($scope.user);
+				});
 		};
 	})
 	

@@ -31,7 +31,7 @@
 	</div>
 
 	<div class="form-group">
-		<label for="birthyear" class="col-sm-2 control-label">Date de naissance</label>
+		<label for="birthyear" class="col-sm-2 control-label">Année de naissance</label>
 		<div class="col-sm-10">
 			<input type="number" class="form-control" ng-model="user.birthyear" id="birthyear" placeholder="">
 		</div>
@@ -71,6 +71,6 @@
 		</div>
 	</div>
 
-	<button class="btn btn-primary" ng-click="save()">Sauvegarger</button>
+	<button class="btn btn-primary" ng-disabled="isUnchanged()" ng-click="save()">Sauvegarder</button>
 
 </form>
