@@ -47,7 +47,7 @@ angular
 		
 		$scope.consolidate = function() {
 			for (var key in $scope.user)
-				if (!$scope.user[key] || $scope.other[key])
+				if (!$scope.user[key] && $scope.other[key])
 					$scope.user[key] = $scope.other[key];
 			
 			$http.delete('/users/' + $scope.other.user_id).then(function() {
