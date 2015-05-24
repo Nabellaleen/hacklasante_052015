@@ -148,7 +148,7 @@ class HlsDatabase:
 
         for item in result:
             if abs(float(bestscore))>0.01:
-                item['score']=100.0*item['score']/bestscore
+                item['score']=item['score']
             else:
                 item['score']=0.0
         
