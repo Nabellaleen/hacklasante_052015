@@ -74,7 +74,7 @@ class HlsDatabase:
         db_fields = set(self.get_fields_names())
         result_fields = []
         for field_name in db_fields - request_fields:
-            values = [getattr(user['user'], field_name, None).get_value() for user in users]
+            values = [getattr(user['user'], field_name, None) for user in users]
             if all(values):
                 field = self.get_field(field_name)
                 result_fields.append({
