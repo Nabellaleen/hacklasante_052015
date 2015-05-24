@@ -19,7 +19,7 @@ angular
 		}, true);
 	})
 	
-	.controller('UserController', function($scope, $http, user) {
+	.controller('UserController', function($scope, $http, $stateParams, user) {
 		$scope.user = user;
 		
 		$scope.save = function() {
