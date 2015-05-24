@@ -13,16 +13,23 @@ def get_users():
     json_data = request.get_json(force=True)
     database = get_database()
     users = database.search_users(json_data['fields'])
+    users_ns = []
+    for user in users:
+        user_json = user['user'].get_basic_namespace()
+        users_ns.append({'user': user_json,
+                         'score': user['score']})
+
     missing_fields = database.get_missing_fields(
         fields=json_data['fields'].keys(),
         users=users)
+    missing_fields_ns = []
+    for field in missing_fields:
+        field_json = {
+            'name': field['name'],
+            'weight': field['field'].get_weight()}
+        missing_fields_ns.append(field_json)
 
-    result = []
-    for entry in users:
-        user_json = entry['user'].get_namespace()
-        result.append({'user': user_json,
-                       'score': entry['score']})
     return jsonify(
-            users=result,
-            missing_fields=missing_fields
+            users=users_ns,
+            missing_fields=missing_fields_ns
         )

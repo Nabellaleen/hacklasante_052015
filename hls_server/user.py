@@ -1,10 +1,33 @@
+from hls_server.fields import Field, BasicField
+
 class User:
+
+    name = BasicField(title='Pseudonyme', weight=0.4)
+    sexe = BasicField(title='Sexe', weight=0.7)
+    firstname = BasicField(title='Prénom', weight=0.6)
+    lastname = BasicField(title='Nom de famille', weight=0.3)
+    birthyear = BasicField(title='Année de naissance', weight=0.9)
+    blood_group = Field(title='Groupe sanguin', weight=0.7)
 
     def __init__(self, **kwargs):
         # Automatically add init parameters as instance fields
         for k, v in kwargs.items():
-            setattr(self, k, v)
+            field = getattr(self, k, None)
+            if not field:
+                continue
+            field.set_value(v)
 
-    def get_namespace(self):
+    def get_basic_namespace(self):
         # TODO : Improve being less dynamic / more explicit
-        return vars(self)
+        result = {}
+        for field_name, field in User.get_fields():
+            if field.is_basic_field():
+                result[field_name] = field.get_value()
+        return result
+
+    @classmethod
+    def get_fields(cls):
+        for elt_name in dir(cls):
+            elt = getattr(cls, elt_name)
+            if isinstance(elt, Field):
+                yield elt_name, elt

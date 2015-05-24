@@ -14,30 +14,18 @@ def get_database():
 
 class HlsDatabase:
 
-    _fields = (
-        {'name': 'name',
-         'weight': 0.7},
-        {'name': 'firstname',
-         'weight': 0.4},
-        {'name': 'lastname',
-         'weight': 0.8},
-        {'name': 'birthyear',
-         'weight': 0.7},
-        {'name': 'sexe',
-         'weight': 0.9})
-
     def __init__(self, filepath):
         pass
 
-    def get_field(self, field_name):
-        for field in self._fields:
-            if field['name'] == field_name:
+    def get_field(self, name):
+        for field_name, field in User.get_fields():
+            if field_name == name:
                 return field
         return None
 
     def get_fields_names(self):
-        for field in self._fields:
-            yield field['name']
+        for field_name, field in User.get_fields():
+            yield field_name
 
     def search_users(self, fields):
         user1 = User(
@@ -71,8 +59,10 @@ class HlsDatabase:
         db_fields = set(self.get_fields_names())
         result_fields = []
         for field_name in db_fields - request_fields:
-            values = [getattr(user['user'], field_name, None) for user in users]
+            values = [getattr(user['user'], field_name, None).get_value() for user in users]
             if all(values):
                 field = self.get_field(field_name)
-                result_fields.append(field)
+                result_fields.append({
+                    'name': field_name,
+                    'field': field})
         return result_fields
