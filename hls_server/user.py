@@ -3,11 +3,11 @@
 from hls_server.fields import Field, BasicField
 
 user_fields = {
-    'name': BasicField(title='Pseudonyme', weight=0.9, ftype='char'),
+    'name': BasicField(title='Pseudonyme', weight=0.8, ftype='char'),
     'sexe': BasicField(title='Sexe', weight=0.7, ftype='qcm'),
     'firstname': BasicField(title='Prénom', weight=0.2, ftype='char'),
-    'lastname': BasicField(title='Nom de famille', weight=0.3, ftype='char'),
-    'birthyear': BasicField(title='Année de naissance', weight=0.9, ftype='number'),
+    'lastname': BasicField(title='Nom de famille', weight=0.2, ftype='char'),
+    'birthyear': BasicField(title='Année de naissance', weight=0.3, ftype='number'),
     'nationality': BasicField(title='Nationalité', weight=0.2, ftype='qcm'),
     'legalstatus': BasicField(title='Statut légal', weight=0.2, ftype='qcm'),
     'secu': BasicField(title='Couverture médicale', weight=0.3, ftype='qcm'),

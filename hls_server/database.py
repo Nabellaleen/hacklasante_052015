@@ -3,6 +3,7 @@ from csv import DictWriter as csv_writer
 
 from hls_server.user import User, get_fields
 from pyxdameraulevenshtein import damerau_levenshtein_distance, normalized_damerau_levenshtein_distance, damerau_levenshtein_distance_withNPArray, normalized_damerau_levenshtein_distance_withNPArray
+import math as m
 
 _database = None
 
@@ -80,7 +81,16 @@ class HlsDatabase:
     def get_fields_names(self):
         for field_name, field in User.get_fields():
             yield field_name
-
+    
+    def meanvalue(self,values):
+        return float(sum(values))/len(values)
+    
+    def dispersion(self,values):
+        sqsumarray=[item**2 for item in values]
+        sqsum=sum(sqsumarray)
+        sqsum=sqsum/len(values)
+        return m.sqrt(sqsum)
+        
     def search_users(self, fields):
         result = []
         for user_id, user in self._users.items():
@@ -130,7 +140,30 @@ class HlsDatabase:
                 item['score']=item['score']/weightnorm
             else:
                 item['score']=0.0
+        
+        result.sort(key=lambda x: x['score'],reverse=True)
+        
+        
+        bestscore=result[0]['score']
 
+        for item in result:
+            if abs(float(bestscore))>0.01:
+                item['score']=100.0*item['score']/bestscore
+            else:
+                item['score']=0.0
+        
+        slope=(result[0]['score']-result[4]['score'])/5.0
+        
+        for item0 in result:
+            score0=item0['score']
+            countN=0
+            for item1 in result:
+                score1=item0['score']
+                if score1>score0-3*slope and score1<score0+3*slope:
+                    countN=countN+1
+            item0['quality']=1.0/countN
+        
+        
         return result
 
     def get_missing_fields(self, fields, users):
