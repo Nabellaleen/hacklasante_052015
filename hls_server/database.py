@@ -1,3 +1,5 @@
+from csv import DictReader as csv_reader
+
 from hls_server.user import User
 from pyxdameraulevenshtein import damerau_levenshtein_distance, normalized_damerau_levenshtein_distance, damerau_levenshtein_distance_withNPArray, normalized_damerau_levenshtein_distance_withNPArray
 
@@ -18,27 +20,13 @@ class HlsDatabase:
     _users = {}
 
     def __init__(self, filepath):
-        user1 = User(
-            name='Toto',
-            firstname='Flo',
-            lastname='Rian',
-            birthyear=1912,
-            sexe='M')
-        user2 = User(
-            name=None,
-            firstname='Gerard',
-            lastname='Blabla',
-            birthyear=1948,
-            sexe='F')
-        user3 = User(
-            name='Superman',
-            firstname='Gaston',
-            lastname=None,
-            birthyear=1974,
-            sexe='F')
-        self.add_user(user1)
-        self.add_user(user2)
-        self.add_user(user3)
+        with open(filepath) as csvfile:
+             database = csv_reader(csvfile, delimiter=',')
+             for row in database:
+                new_user = User()
+                for key, value in row.items():
+                    new_user.set_value(key, value)
+                self.add_user(new_user)
 
     def add_user(self, user):
         user_id = str(len(self._users.keys()))

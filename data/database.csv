@@ -1,4 +1,4 @@
-Nom,Prénom,Pseudo / Alias,Sexes,Année de naissance,Nationalité,Statut légal,"Couverture médicale (Oui / Non, Laquelle)"
+lastname,firstname,name,sexe,birthyear,nationality,legalstatus,secu
 Dupont,Albert,Alain,M,1986,Malgache,ISAS,N
 Durant,Sylvie,Natasha,F,1995,Kenya,ISAS,N
 ,Nabila,Brigitte,F,1950,Libanaise,PBTS,O

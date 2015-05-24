@@ -56,13 +56,13 @@ class User:
         if not field:
             return
         setattr(self, name, value)
-    
+
     def get_value(self,name):
         field = get_field(name)
         if not field:
             return None
         return getattr(self, name)
-        
+
 
     def __repr__(self):
         return "<User({0}, {1})>".format(self.user_id, self.name)
