@@ -51,7 +51,7 @@ angular
 				resolve: {
 					users: function($http, user) {
 						return $http.post('/;get_users', {fields: user}).then(function(result) {
-							result.data.users.sort(function(a, b) { return 100 * (a.score - b.score); });
+							result.data.users.sort(function(a, b) { return 100 * (b.score - a.score); });
 							return result.data.users;
 						});
 					}

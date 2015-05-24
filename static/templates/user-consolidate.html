@@ -5,56 +5,65 @@
 	<li class="active">Consolider</li>
 </ol>
 
-<table>
+<table class="table table-striped table-condensed table-bordered">
 	<thead>
 		<tr>
 			<th></th>
-			<th>Utilisateur courant</th>
-			<th>Doublon</th>
+			<th style="width: 25%">Utilisateur courant</th>
+			<th style="width: 25%">Utilisateur doublon</th>
+			<th style="width: 25%">Version fusionné</th>
 		</tr>
 	</thead>
 	<tbody>
 		<tr>
-			<td>name</td>
+			<td>Pseudo</td>
 			<td>{{user.name}}</td>
 			<td>{{other.name}}</td>
+			<td>{{user.name||other.name}}</td>
 		</tr>
 		<tr>
-			<td>firstname</td>
+			<td>Prénom</td>
 			<td>{{user.firstname}}</td>
 			<td>{{other.firstname}}</td>
+			<td>{{user.firstname||other.firstname}}</td>
 		</tr>
 		<tr>
-			<td>lastname</td>
+			<td>Nom</td>
 			<td>{{user.lastname}}</td>
 			<td>{{other.lastname}}</td>
+			<td>{{user.lastname||other.lastname}}</td>
 		</tr>
 		<tr>
-			<td>birthyear</td>
+			<td>Année de naissance</td>
 			<td>{{user.birthyear}}</td>
 			<td>{{other.birthyear}}</td>
+			<td>{{user.birthyear||other.birthyear}}</td>
 		</tr>
 		<tr>
-			<td>nationality</td>
+			<td>Nationalité</td>
 			<td>{{user.nationality}}</td>
 			<td>{{other.nationality}}</td>
+			<td>{{user.nationality||other.nationality}}</td>
 		</tr>
 		<tr>
-			<td>sexe</td>
+			<td>Sexe</td>
 			<td>{{user.sexe}}</td>
 			<td>{{other.sexe}}</td>
+			<td>{{user.sexe||other.sexe}}</td>
 		</tr>
 		<tr>
-			<td>legalstatus</td>
+			<td>Status légal</td>
 			<td>{{user.legalstatus}}</td>
 			<td>{{other.legalstatus}}</td>
+			<td>{{user.legalstatus||other.legalstatus}}</td>
 		</tr>
 		<tr>
-			<td>secu</td>
+			<td>CMU</td>
 			<td>{{user.secu}}</td>
 			<td>{{other.secu}}</td>
+			<td>{{user.secu||other.secu}}</td>
 		</tr>
 	</tbody>
 </table>
 
-<button class="btn btn-primary">Valider la fusion</button>
+<button class="btn btn-primary" ng-click="consolidate()">Valider la fusion</button>

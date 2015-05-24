@@ -13,7 +13,7 @@ angular
 			}
 
 			$http.post('/;get_users', {fields: $scope.search}).then(function(result) {
-				result.data.users.sort(function(a, b) { return 100 * (a.score - b.score); });
+				result.data.users.sort(function(a, b) { return 100 * (b.score - a.score); });
 				$scope.results = result.data.users;
 			});
 		}, true);
@@ -23,12 +23,8 @@ angular
 		$scope.user = user;
 		
 		$scope.save = function() {
-			$http.put('/users/' + user.user_id, $scope.user)
+			return $http.put('/users/' + user.user_id, $scope.user)
 		};
-
-		// $scope.delete = function() {
-		// 	$http.delete('/')
-		// };
 	})
 	
 	.controller('UserPreviewController', function($scope) {
@@ -46,7 +42,19 @@ angular
 		});
 	})
 	
-	.controller('UserRemoveController', function($scope) {
+	.controller('UserConsolidateController', function($scope, $http, $state, other) {
+		$scope.other = other;
+		
+		$scope.consolidate = function() {
+			for (var key in $scope.user)
+				if (!$scope.user[key] || $scope.other[key])
+					$scope.user[key] = $scope.other[key];
+			
+			$http.delete('/users/' + $scope.other.user_id).then(function() {
+				$scope.save();
 
+				$state.go('user.preview')
+			});
+		}
 	});
 
