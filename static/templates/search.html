@@ -1,16 +1,8 @@
 
 
-
-<!-- Nav tabs -->
-<ul class="nav nav-tabs" role="tablist">
-	<li role="presentation" class="active"><a href="#search" aria-controls="search" role="tab" data-toggle="tab">Recherche</a></li>
-	<li role="presentation"><a href="#qr" aria-controls="qr" role="tab" data-toggle="tab">QR</a></li>
-</ul>
-
-<!-- Tab panes -->
-<div class="tab-content">
-	<div role="tabpanel" class="tab-pane active" id="search">
-		<h2>Remplissez les données dont vous disposez</h2>
+<div class="row">
+	<div class="col-sm-9">
+<h2>Remplissez les données dont vous disposez</h2>
 
 		<form class="form-horizontal">
 			<div class="form-group">
@@ -105,15 +97,13 @@
 
 		</div>
 
-		
+
 	</div>
-	<div role="tabpanel" class="tab-pane" id="qr">
-	
+	<div class="col-sm-3">
+
 		<div id="reader" style="width:300px;height:250px"></div>
-		
+
 	</div>
 </div>
-
-
 
 <button class="btn btn-default btn-primary" ui-sref="user.patient({userId:'new'})">Créer une nouvelle fiche</button>
