@@ -19,8 +19,17 @@ def rest_user(user_id=None):
         except KeyError:
             abort(403)
         return jsonify(user.get_namespace())
+
     elif request_method == 'PUT':
-        pass
+        json_data = request.get_json(force=True)
+        try:
+            user = database.get_user(user_id)
+        except KeyError:
+            abort(403)
+        for key, value in json_data['fields'].items():
+            user.set_value(key, value)
+        return jsonify(user.get_namespace())
+
     elif request_method == 'POST':
         json_data = request.get_json(force=True)
         {'fields': {'birthyear': 1988, 'name': 'Florian'}}
@@ -29,6 +38,7 @@ def rest_user(user_id=None):
             new_user.set_value(key, value)
         new_user = database.add_user(new_user)
         return jsonify(new_user.get_namespace())
+
     elif request_method == 'DELETE':
         deleted_user = database.pop_user(user_id)
         return jsonify(deleted_user.get_namespace())
