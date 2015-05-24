@@ -4,26 +4,31 @@ from flask import request, jsonify, abort
 import flask.views
 
 from hls_server.database import get_database
+from hls_server.user import User
 
 class HlsServerView(flask.views.MethodView):
     def get(self):
         return render_template('main.html')
 
-def rest_user(user_id):
+def rest_user(user_id=None):
     database = get_database()
-    try:
-        user = database.get_user(user_id)
-    except KeyError:
-        abort(403)
-    if not user:
-        abort(402)
     request_method = request.method
     if request_method == 'GET':
+        try:
+            user = database.get_user(user_id)
+        except KeyError:
+            abort(403)
         return jsonify(user.get_namespace())
-    elif request_method == 'POST':
-        pass
     elif request_method == 'PUT':
         pass
+    elif request_method == 'POST':
+        json_data = request.get_json(force=True)
+        {'fields': {'birthyear': 1988, 'name': 'Florian'}}
+        new_user = User()
+        for key, value in json_data['fields'].items():
+            new_user.set_value(key, value)
+        new_user = database.add_user(new_user)
+        return jsonify(new_user.get_namespace())
     elif request_method == 'DELETE':
         deleted_user = database.pop_user(user_id)
         return jsonify(deleted_user.get_namespace())

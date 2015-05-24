@@ -13,9 +13,13 @@ app.add_url_rule('/;get_users',
     view_func=get_users,
     methods=['POST'])
 
+app.add_url_rule('/users',
+    view_func=rest_user,
+    methods=['POST'])
+
 app.add_url_rule('/users/<user_id>',
     view_func=rest_user,
-    methods=['GET', 'POST', 'PUT', 'DELETE'])
+    methods=['GET', 'PUT', 'DELETE'])
 
 if __name__ == "__main__":
     init_database('data/database.csv')

@@ -44,6 +44,7 @@ class HlsDatabase:
         user_id = str(len(self._users.keys()))
         user.set_value('user_id', user_id)
         self._users[user_id] = user
+        return user
 
     def pop_user(self, user_id):
         return self._users.pop(user_id)
@@ -61,47 +62,14 @@ class HlsDatabase:
         for field_name, field in User.get_fields():
             yield field_name
 
-
-
     def search_users(self, fields):
-
         result = []
         for user_id, user in self._users.items():
             user_score=0.0
-    #         weightnorm=0.0
-    #         for field_key, field_value in fields.items():
-				
-				# field=self.get_field(field_key)				
-				# field_user_value = user.get_value(field_key)
-				
-				# if not field_value or not field_user_value:
-				# 	continue
-				
-				# weightnorm=weightnorm+field.weight
-				# fieldscore=0.0
-				# if field.ftype == 'number':
-				# 	if abs(field_user_value-field_value)<12.5:
-				# 		fieldscore=field.weight*(100.0-8*abs(field_user_value-field_value))
-				# 	else:
-				# 		fieldscore=0.0
-				
-				# if field.ftype == 'qcm':
-				# 	if field_user_value==field_value:
-				# 		fieldscore=field.weight*100.0
-				# 	else:
-				# 		fieldscore=0.0
-				
-				# if field.ftype == 'char':
-				# 	distance=damerau_levenshtein_distance(field_user_value, field_value)
-				# 	string_len=max(len(field_user_value),len(field_value))
-				# 	fieldscore=100.0*field.weight*distance/string_len    
-				# user_score=user_score+fieldscore
-				
             result.append({
                 'user': user,
                 'score': user_score
                 })
-        # result=result/weightnorm
         return result
 
     def get_missing_fields(self, fields, users):
