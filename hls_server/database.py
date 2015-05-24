@@ -1,6 +1,5 @@
-from random import random
-
 from hls_server.user import User
+from pyxdameraulevenshtein import damerau_levenshtein_distance, normalized_damerau_levenshtein_distance, damerau_levenshtein_distance_withNPArray, normalized_damerau_levenshtein_distance_withNPArray
 
 _database = None
 
@@ -59,14 +58,42 @@ class HlsDatabase:
         for field_name, field in User.get_fields():
             yield field_name
 
+
+
     def search_users(self, fields):
+
         result = []
         for user_id, user in self._users.items():
+            user_score=0.0
+            weightnorm=0.0
+            for field_key, field_value in fields.items():
+                if field_value!=None & field_value!=None:
+                    weightnorm=weightnorm+field.weight
+                    field=self.get_field(field_key)
+                    
+                    field_user_value = user.get_value(field_key)
+                    
+                    fieldscore=0.0
+                    if field.ftype == 'number':
+                        fieldscore=100.0-abs(field_user_value-field_value)
+                    
+                    if field.ftype == 'qcm':
+                        if field_user_value==field_value:
+                            fieldscore=100.0
+                        else:
+                            fieldscore=0.0
+                    
+                    if field.ftype == 'char':
+                        distance=damerau_levenshtein_distance(field_user_value, field_value)
+                        string_len=max(len(field_user_value),len(field_value))
+                        fieldscore=100.0*distance/string_len
+                    
+            user_score=user_score+fieldscore
             result.append({
                 'user': user,
-                'score': random()
+                'score': user_score
                 })
-        # TODO
+        result=result/weightnorm
         return result
 
     def get_missing_fields(self, fields, users):
